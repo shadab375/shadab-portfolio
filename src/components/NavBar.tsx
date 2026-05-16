@@ -2,18 +2,15 @@
 
 import clsx from "clsx";
 import React, { useState } from "react";
-import { Content, KeyTextField, asLink } from "@prismicio/client";
-import { PrismicNextLink } from "@prismicio/next";
 import Link from "next/link";
-import { MdMenu, MdClose } from "react-icons/md";
-import Button from "./Button";
 import { usePathname } from "next/navigation";
+import { MdClose, MdMenu } from "react-icons/md";
+import Button from "./Button";
+import { siteContent } from "@/data/siteContent";
 
-export default function NavBar({
-  settings,
-}: {
-  settings: Content.SettingsDocument;
-}) {
+const navItems = siteContent.settings.nav;
+
+export default function NavBar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -21,7 +18,7 @@ export default function NavBar({
     <nav aria-label="Main navigation">
       <ul className="flex flex-col justify-between rounded-b-lg bg-slate-50 px-4 py-2 md:m-4 md:flex-row md:items-center md:rounded-xl">
         <div className="flex items-center justify-between">
-          <NameLogo name={settings.data.name} />
+          <NameLogo name={siteContent.settings.name} />
           <button
             aria-expanded={open}
             aria-label="Open menu"
@@ -40,62 +37,40 @@ export default function NavBar({
           <button
             aria-label="Close menu"
             aria-expanded={open}
-            className="fixed right-4 top-3 block p-2 text-2xl text-slate-800 md:hidden "
+            className="fixed right-4 top-3 block p-2 text-2xl text-slate-800 md:hidden"
             onClick={() => setOpen(false)}
           >
             <MdClose />
           </button>
-          {settings.data.nav_item.map(({ link, label }, index) => (
+          {navItems.map(({ href, label }, index) => (
             <React.Fragment key={label}>
               <li className="first:mt-8">
-                <PrismicNextLink
-                  className={clsx(
-                    "group relative block overflow-hidden rounded px-3 text-3xl font-bold text-slate-900 ",
-                  )}
-                  field={link}
+                <NavLink
+                  href={href}
+                  label={label}
+                  pathname={pathname}
                   onClick={() => setOpen(false)}
-                  aria-current={
-                    pathname.includes(asLink(link) as string)
-                      ? "page"
-                      : undefined
-                  }
-                >
-                  <span
-                    className={clsx(
-                      "absolute inset-0 z-0 h-full translate-y-12 rounded bg-yellow-300 transition-transform duration-300 ease-in-out group-hover:translate-y-0",
-                      pathname.includes(asLink(link) as string)
-                        ? "translate-y-6"
-                        : "translate-y-18",
-                    )}
-                  />
-                  <span className="relative">{label}</span>
-                </PrismicNextLink>
+                  mobile
+                />
               </li>
-              {index < settings.data.nav_item.length - 1 && (
-                <span
-                  className="hidden text-4xl font-thin leading-[0] text-slate-400 md:inline"
-                  aria-hidden="true"
-                >
-                  /
-                </span>
-              )}
+              {index < navItems.length - 1 && <Divider mobile />}
             </React.Fragment>
           ))}
           <li>
             <Button
-              linkField={settings.data.cta_link}
-              label={settings.data.cta_label}
+              href={siteContent.settings.ctaUrl}
+              label={siteContent.settings.ctaLabel}
               className="ml-3"
             />
           </li>
         </div>
-        <DesktopMenu settings={settings} pathname={pathname} />
+        <DesktopMenu pathname={pathname} />
       </ul>
     </nav>
   );
 }
 
-function NameLogo({ name }: { name: KeyTextField }) {
+function NameLogo({ name }: { name: string }) {
   return (
     <Link
       href="/"
@@ -107,55 +82,75 @@ function NameLogo({ name }: { name: KeyTextField }) {
   );
 }
 
-function DesktopMenu({
-  settings,
-  pathname,
-}: {
-  settings: Content.SettingsDocument;
-  pathname: string;
-}) {
+function DesktopMenu({ pathname }: { pathname: string }) {
   return (
     <div className="relative z-50 hidden flex-row items-center gap-1 bg-transparent py-0 md:flex">
-      {settings.data.nav_item.map(({ link, label }, index) => (
+      {navItems.map(({ href, label }, index) => (
         <React.Fragment key={label}>
           <li>
-            <PrismicNextLink
-              className={clsx(
-                "group relative block overflow-hidden rounded px-3 py-1 text-base font-bold text-slate-900",
-              )}
-              field={link}
-              aria-current={
-                pathname.includes(asLink(link) as string) ? "page" : undefined
-              }
-            >
-              <span
-                className={clsx(
-                  "absolute inset-0 z-0 h-full rounded bg-yellow-300 transition-transform  duration-300 ease-in-out group-hover:translate-y-0",
-                  pathname.includes(asLink(link) as string)
-                    ? "translate-y-6"
-                    : "translate-y-8",
-                )}
-              />
-              <span className="relative">{label}</span>
-            </PrismicNextLink>
+            <NavLink href={href} label={label} pathname={pathname} />
           </li>
-          {index < settings.data.nav_item.length - 1 && (
-            <span
-              className="hidden text-4xl font-thin leading-[0] text-slate-400 md:inline"
-              aria-hidden="true"
-            >
-              /
-            </span>
-          )}
+          {index < navItems.length - 1 && <Divider />}
         </React.Fragment>
       ))}
       <li>
         <Button
-          linkField={settings.data.cta_link}
-          label={settings.data.cta_label}
+          href={siteContent.settings.ctaUrl}
+          label={siteContent.settings.ctaLabel}
           className="ml-3"
         />
       </li>
     </div>
+  );
+}
+
+function NavLink({
+  href,
+  label,
+  pathname,
+  onClick,
+  mobile = false,
+}: {
+  href: string;
+  label: string;
+  pathname: string;
+  onClick?: () => void;
+  mobile?: boolean;
+}) {
+  const isActive = href === "/" ? pathname === "/" : false;
+
+  return (
+    <Link
+      href={href}
+      className={clsx(
+        "group relative block overflow-hidden rounded font-bold text-slate-900",
+        mobile ? "px-3 text-3xl" : "px-3 py-1 text-base",
+      )}
+      onClick={onClick}
+      aria-current={isActive ? "page" : undefined}
+    >
+      <span
+        className={clsx(
+          "absolute inset-0 z-0 h-full rounded bg-yellow-300 transition-transform duration-300 ease-in-out group-hover:translate-y-0",
+          mobile ? "translate-y-12" : "translate-y-8",
+          isActive && "translate-y-6",
+        )}
+      />
+      <span className="relative">{label}</span>
+    </Link>
+  );
+}
+
+function Divider({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <span
+      className={clsx(
+        "text-4xl font-thin leading-[0] text-slate-400",
+        mobile && "hidden md:inline",
+      )}
+      aria-hidden="true"
+    >
+      /
+    </span>
   );
 }

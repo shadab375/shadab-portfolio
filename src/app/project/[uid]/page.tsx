@@ -1,43 +1,50 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import ProjectBlog from "@/components/ProjectBlog";
+import { siteContent } from "@/data/siteContent";
 
-import { createClient } from "@/prismicio";
-
-import ContentBody from "@/components/ContentBody";
-import { formatDate } from "@/utils/formatDate";
-
-type Params = { uid: string };
-
-export default async function Page({ params }: { params: Params }) {
-  const client = createClient();
-  const page = await client
-    .getByUID("project", params.uid)
-    .catch(() => notFound());
-
-  return <ContentBody page={page} />;
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
-  const client = createClient();
-  const page = await client
-    .getByUID("project", params.uid)
-    .catch(() => notFound());
-
-  return {
-    title: page.data.title,
-    description: page.data.meta_description,
+type ProjectPageProps = {
+  params: {
+    uid: string;
   };
+};
+
+export function generateStaticParams() {
+  return siteContent.projects.map((project) => ({
+    uid: project.uid,
+  }));
 }
 
-export async function generateStaticParams() {
-  const client = createClient();
-  const pages = await client.getAllByType("project");
+export function generateMetadata({ params }: ProjectPageProps): Metadata {
+  const project = siteContent.projects.find((item) => item.uid === params.uid);
 
-  return pages.map((page) => {
-    return { uid: page.uid };
-  });
+  if (!project) {
+    return {
+      title: "Project not found | Shadab",
+    };
+  }
+
+  const metadata: Metadata = {
+    title: `${project.title} | Shadab`,
+    description: `A project writeup for ${project.title}.`,
+  };
+
+  if (project.image) {
+    metadata.openGraph = {
+      title: project.title,
+      images: [project.image],
+    };
+  }
+
+  return metadata;
+}
+
+export default function ProjectDetailPage({ params }: ProjectPageProps) {
+  const project = siteContent.projects.find((item) => item.uid === params.uid);
+
+  if (!project) {
+    notFound();
+  }
+
+  return <ProjectBlog project={project} />;
 }

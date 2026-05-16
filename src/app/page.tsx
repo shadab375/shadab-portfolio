@@ -1,22 +1,12 @@
-import { Metadata } from "next";
-import { SliceZone } from "@prismicio/react";
+import type { Metadata } from "next";
+import HomePage from "@/components/HomePage";
 
-import { createClient } from "@/prismicio";
-import { components } from "@/slices";
+export const metadata: Metadata = {
+  title: "Shadab | Full-stack Product Engineer",
+  description:
+    "Portfolio of Shadab, focused on Phodu Club, EdTech platforms, test engines, AI workflows, and production-grade web apps.",
+};
 
-export default async function Page() {
-  const client = createClient();
-  const page = await client.getSingle("homepage");
-
-  return <SliceZone slices={page.data.slices} components={components} />;
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-  const client = createClient();
-  const page = await client.getSingle("homepage");
-
-  return {
-    title: page.data.meta_title,
-    description: page.data.meta_description,
-  };
+export default function Page() {
+  return <HomePage />;
 }
