@@ -22,7 +22,7 @@ export const siteContent = {
       "I'm Md Shadab Kalim—a software engineer focused on backend systems, infrastructure, and full-stack products. I'm from Ranchi and studied Computer Science at BITS Pilani (B.E., CGPA 7.64), where I won Quark Hackathon 2024 and earned the Google Cloud Digital Leader certification at 90%.",
       "Professionally, I've shipped high-throughput automation at Mercor (Redis-backed queues, LLM-assisted parsing for LinkedIn workflows, enrichment pipelines with BrightData and multi-provider waterfalls—546k+ profiles and 35k+ emails enriched—with resilient provider integrations: API key rotation, credit accounting, retries, and Slack alerting). I also built recruiter-facing primitives like a Unified Inbox and candidate communication panels, and owned SEO/content infrastructure across Next.js, JSON-LD, sitemaps, and Sanity CMS.",
       "Earlier I spent six months at Zeal AI building FastAPI services that aggregated restaurant data from seven-plus booking platforms, large scraping pipelines with retries, deduplication, proxy rotation, and geo-collision handling, plus RAG-style search over vector databases for price- and cuisine-aware queries. At Dover Corporation I deployed Node.js services on AWS EC2 for distributor onboarding automation, CI/CD on GitHub Actions, and production hardening including rate limiting, bot mitigation, and DDoS-minded controls.",
-      "Alongside work, I've invested heavily in education technology: at Phodu Club I own end-to-end delivery of a serverless learning platform serving 37,755+ learners and 38,195+ registered users across courses, tests, BITSAT Open, free daily practice, DRM video, payments, admin RBAC, and AWS/SST infrastructure. CrackIT is where I combine conversion-focused Next.js surfaces with Sanity-driven SEO and Razorpay-backed flows for engineering entrance audiences.",
+      "Alongside work, I've invested heavily in education technology: at Phodu Club I own end-to-end delivery of a serverless learning platform serving 37,755+ learners and 38,195+ registered users across courses, tests, BITSAT Open, free daily practice, DRM video, payments, admin RBAC, and AWS/SST infrastructure. The ecosystem around it is mine too: phodu.club is the community and acquisition surface that fills the funnel, and BetterBooks (betterbooks.in) is a commission-free peer-to-peer marketplace I built end-to-end for used prep books, now at 3,269 live listings with ₹1,90,761 saved by students and 4,832 students connected. CrackIT is where I combine conversion-focused Next.js surfaces with Sanity-driven SEO and Razorpay-backed flows for engineering entrance audiences.",
       "I'm strongest where reliability meets product velocity—queues and idempotency, Postgres and Prisma, AWS and SST, and pragmatic AI when retrieval or enrichment actually moves metrics.",
     ],
     avatar:
@@ -46,9 +46,9 @@ export const siteContent = {
     {
       title: "Full Stack Engineer (Ed-Tech, Remote)",
       timePeriod: "March 2025 – Present",
-      institution: "Phodu Club · learn.phodu.club",
+      institution: "Phodu Club · learn.phodu.club · phodu.club · betterbooks.in",
       description:
-        "• Own end-to-end delivery of a serverless learning platform using Next.js, SST, and Drizzle, serving 37,755+ learners and 38,195+ registered users across courses, tests, and free daily practice.\n\n• Manage AWS infrastructure via SST/IaC across ap-south-1: stage-aware secrets, database links, protected production resources, S3/browser-upload permissions, SES transactional mail, CloudFront, ACM certificates, Lambda, RDS PostgreSQL, VPC, NAT, and bastion access patterns.\n\n• Ran infrastructure and operations for BITSAT Open, an All-India mock targeting approximately 10,000 concurrent test-takers during a three-hour window, including load testing, scaling, queues, rate limits, and real-time stability monitoring.\n\n• Shipped reliable exam-client flows with resilient autosave, a unified question-state model, and single-flight fetches so high-concurrency attempts remain consistent under load.\n\n• Added trust and content-delivery layers including Cloudflare Turnstile bot protection, DRM-protected video playback, AI-assisted attempt analysis, and fine-tuned OpenAI daily English/LR practice generation.",
+        "• Own end-to-end delivery of a serverless learning platform using Next.js, SST, and Drizzle, serving 37,755+ learners and 38,195+ registered users across courses, tests, and free daily practice.\n\n• Manage AWS infrastructure via SST/IaC across ap-south-1: stage-aware secrets, database links, protected production resources, S3/browser-upload permissions, SES transactional mail, CloudFront, ACM certificates, Lambda, RDS PostgreSQL, VPC, NAT, and bastion access patterns.\n\n• Ran infrastructure and operations for BITSAT Open, an All-India mock targeting approximately 10,000 concurrent test-takers during a three-hour window, including load testing, scaling, queues, rate limits, and real-time stability monitoring.\n\n• Shipped reliable exam-client flows with resilient autosave, a unified question-state model, and single-flight fetches so high-concurrency attempts remain consistent under load.\n\n• Added trust and content-delivery layers including Cloudflare Turnstile bot protection, DRM-protected video playback, AI-assisted attempt analysis, and fine-tuned OpenAI daily English/LR practice generation.\n\n• Built BetterBooks (betterbooks.in) end-to-end—a commission-free peer-to-peer marketplace for used prep books with admin-reviewed listings, S3-backed photo/video uploads, exam and subject browse, and a direct WhatsApp handoff instead of platform-held payments—now at 3,269 live listings, ₹1,90,761 saved by students, and 4,832 students connected.\n\n• Maintain phodu.club, the WordPress/Elementor community and acquisition surface behind Cloudflare: performance and Core Web Vitals work, custom scripts fixing page-builder defaults, SEO across the exam catalogue, and funnel wiring into the learning platform.",
     },
     {
       title: "Software Engineer (Remote)",
@@ -113,6 +113,40 @@ export const siteContent = {
       ],
       image: "/screenshots/phodu-club-learn.png",
       liveLink: "https://learn.phodu.club",
+    },
+    {
+      uid: "betterbooks",
+      title: "BetterBooks - Peer-to-peer used textbook marketplace",
+      date: "2026-08-20",
+      tags: [
+        "Next.js",
+        "TypeScript",
+        "Drizzle",
+        "PostgreSQL",
+        "SST",
+        "AWS",
+        "S3",
+        "Admin Moderation",
+        "WhatsApp Handoff",
+      ],
+      image: "/screenshots/betterbooks-home.png",
+      liveLink: "https://betterbooks.in",
+    },
+    {
+      uid: "phodu-club-web",
+      title: "phodu.club - Community and acquisition site",
+      date: "2026-08-04",
+      tags: [
+        "WordPress",
+        "Elementor",
+        "Cloudflare",
+        "Core Web Vitals",
+        "SEO",
+        "Custom JS",
+        "Funnel",
+      ],
+      image: "/screenshots/phodu-club-web.png",
+      liveLink: "https://phodu.club",
     },
     {
       uid: "crackit",

@@ -49,6 +49,68 @@ const projectCopy: Record<Project["uid"], ProjectWriteup> = {
       "Clear full-stack range: infrastructure, database, exam client, admin ops, content delivery, and learner feedback.",
     ],
   },
+  betterbooks: {
+    intro:
+      "BetterBooks is a peer-to-peer marketplace for used exam-prep textbooks that I built end-to-end as a Phodu Club sustainability initiative. Students list books they have finished with, buyers browse by exam and subject, and the two sides are connected directly over WhatsApp—no commission, no platform-held payments, no shipping middleman. It currently carries 3,269 live listings and reports 1,063 books reused, ₹1,90,761 saved by students, and 4,832 students connected.",
+    context:
+      "The stack mirrors the learning platform: Next.js and TypeScript on the front, Drizzle over PostgreSQL for listings, users, and interest events, and SST-managed AWS infrastructure for deploys, S3 media, and transactional mail. The interesting design constraint is what the product deliberately does not do. There is no checkout, no escrow, and no logistics integration, because a commission-free student marketplace cannot carry the support burden of payment disputes and courier failures. Instead the platform invests everything in the two steps that actually decide whether a used-book trade happens: trustworthy listing quality, and a fast handoff to a real conversation.",
+    buildNotes:
+      "Trust is the whole product, so listings are human-reviewed rather than instantly published: sellers upload photos, optional video, and condition details, and an admin queue clears submissions within one to two working days. That review step is what keeps a marketplace of strangers usable, and it needed real tooling—moderation views, media handling through S3 browser uploads, and status transitions that keep a seller informed while their listing is pending. On the discovery side, browse is built for how students actually shop: exam tabs (JEE Main and Advanced, BITSAT, MHT-CET), subject filters down to Physics, Chemistry, Maths, Biology, and English & LR, title/author search, sort ordering, and negotiable-price flags where the seller allows haggling. Demand signals feed back into supply through two small but load-bearing features: \"Request a category\" and \"Can't find your book? Ask for it,\" which turn a failed search into a wanted-listing rather than a bounce.",
+    details: [
+      "End-to-end ownership: product design, schema, listing lifecycle, moderation tooling, browse experience, dashboards, and AWS deployment.",
+      "Scale in production: 3,269 live listings, with 1,063 books reused, ₹1,90,761 saved by students, and 4,832 students connected.",
+      "Next.js and TypeScript with Drizzle over PostgreSQL, deployed on SST-managed AWS infrastructure alongside the wider Phodu stack.",
+      "Admin-reviewed listings with a one-to-two working day SLA—the trust layer that lets strangers transact without escrow.",
+      "Seller flow with photo and video upload plus structured condition capture, backed by S3 browser uploads scoped to approved origins.",
+      "Browse built around real shopping behaviour: exam tabs, subject filters, title/author search, sort ordering, and filter panel.",
+      "Negotiable-price flags so sellers opt into haggling explicitly instead of every listing inviting a lowball message.",
+      "WhatsApp handoff as the deliberate transaction primitive: buyers signal interest, then finish the deal in a channel students already trust.",
+      "Demand capture for missing inventory via \"Request a category\" and book-request flows that convert dead-end searches into wanted listings.",
+      "Seller and buyer dashboards for tracking listings, review status, and incoming interest.",
+      "Commission-free by design, which shaped every scope decision—no payment rails, no logistics, no dispute machinery to staff.",
+      "Complements the Phodu ecosystem: phodu.club and learn.phodu.club serve preparation, BetterBooks recirculates the physical material around it.",
+    ],
+    highlights: [
+      "A marketplace I own end-to-end, from Drizzle schema to moderation queue to live listings.",
+      "Real, measurable impact: ₹1.9L+ saved by students and 1,000+ books kept out of waste.",
+      "Shows product judgement, not just engineering—scoping out payments and shipping was the decision that made it viable.",
+      "Trust-and-safety thinking through human review, structured condition data, and media verification.",
+      "Discovery designed around exam and subject taxonomy rather than generic marketplace search.",
+      "Demand-side feedback loops that treat an empty search result as a signal, not a failure.",
+      "Same serverless AWS/SST discipline as the learning platform, applied to a very different product shape.",
+    ],
+  },
+  "phodu-club-web": {
+    intro:
+      "phodu.club is the public front door of the Phodu ecosystem: the community and acquisition surface that turns exam-prep search traffic and peer word-of-mouth into enrolled learners on learn.phodu.club. It is where the brand argument gets made—mentor-led rather than lecture-led, run by students who cleared these exams themselves—with the outcome proof to back it: 500+ students into IITs, NITs, and IIITs, 2,500+ at BITS Pilani, 1,000+ into top branches, and 92% reporting the program helped them grow.",
+    context:
+      "Unlike the rest of the stack, this surface is intentionally not a Next.js app. It runs on WordPress with Elementor behind Cloudflare, because marketing and content velocity matter more here than architectural purity—the team needs to ship landing iterations, prep guides, blogs, and exam pages without waiting on a deploy. The engineering job is therefore different in kind: keep an Elementor site fast and stable, patch the behaviours a page builder gets wrong, and make sure the funnel into the products is airtight. Custom scripts sit on top of the theme for exactly that—image snapshot handling, header breakpoint correction, FAQ accordion behaviour, and animated counters—each fixing a builder default rather than fighting the CMS wholesale.",
+    buildNotes:
+      "The information architecture is dense by necessity: Resources (blogs, guides, and the BITSAT book), Crash Courses for BITSAT, MHT-CET, and English & Logical Reasoning, Exams covering BITSAT, JEE, MHT-CET, VITEEE, COMEDK, MET, SRMJEEE, UGEE, and IPMAT, Prep Guides per exam, and free WhatsApp communities. All of that has to stay navigable and crawlable while funnelling toward two clear destinations—Explore Courses into the learning platform, and Join Now into the free communities where most trust is actually built. The free-community tier is the strategic hinge of the whole ecosystem: it is a low-friction entry point that costs nothing to join, proves the mentorship claim before any purchase, and then hands qualified students to the paid platform.",
+    details: [
+      "The acquisition and community surface for the Phodu ecosystem, feeding enrolments into learn.phodu.club.",
+      "WordPress and Elementor behind Cloudflare—chosen for editorial velocity, so content ships without engineering releases.",
+      "Custom JavaScript layered over the page builder: image snapshot handling, header breakpoint fixes, FAQ accordion behaviour, and animated outcome counters.",
+      "Dense but navigable IA across Resources, Crash Courses, Exams, Prep Guides, and Free Community.",
+      "Exam coverage spanning BITSAT, JEE, MHT-CET, VITEEE, COMEDK, MET, SRMJEEE, UGEE, and IPMAT, each with its own prep-guide surface.",
+      "Outcome proof rendered as social evidence: 500+ into IITs/NITs/IIITs, 2,500+ at BITS Pilani, 1,000+ into top branches, 92% satisfaction.",
+      "Free WhatsApp communities for JEE, BITSAT, and MHT-CET as the zero-friction top of funnel.",
+      "Commerce touchpoints beyond the platform, including the BITSAT book distributed through Flipkart.",
+      "SEO-oriented content surfaces—blogs, guides, and formula/resource pages built to be found on exam-intent queries.",
+      "Cloudflare in front for TLS, caching, and abuse mitigation on the highest-traffic public surface.",
+      "Waitlist capture for redesigned 2027 products, so demand is measured before the build.",
+      "Positions the ecosystem cleanly: phodu.club convinces, learn.phodu.club delivers, BetterBooks recirculates the books.",
+    ],
+    highlights: [
+      "Shows the pragmatic half of full-stack judgement: not every surface should be a custom app.",
+      "Performance and correctness work on a page-builder stack, where the constraint is the tooling rather than the traffic.",
+      "Funnel thinking made concrete—free community as proof, paid platform as conversion.",
+      "Content and SEO architecture across a large exam catalogue without losing crawlability.",
+      "Targeted custom scripting to fix builder defaults instead of rewriting the site.",
+      "Cloudflare-fronted delivery on the ecosystem's most exposed public surface.",
+      "Completes the ecosystem story alongside the learning platform and BetterBooks.",
+    ],
+  },
   crackit: {
     intro:
       "CrackIT is my primary growth-facing counterpart to Phodu Club: a Next.js platform aimed at engineering entrance exams (BITSAT, MHTCET, COMEDK, VITEEE, MET, UGEE, KCET, and adjacent resources). Where Phodu Club optimises for enrolled learners and operators, CrackIT optimises for discovery, trust, and conversion—SEO-heavy pages, structured content, testimonials, mentorship storytelling, and Razorpay-backed purchase paths.",
@@ -244,6 +306,8 @@ const projectCopy: Record<Project["uid"], ProjectWriteup> = {
 
 const accentByUid: Partial<Record<Project["uid"], string>> = {
   "phodu-club": "from-blue-500 via-cyan-400 to-yellow-300",
+  betterbooks: "from-emerald-500 via-teal-400 to-green-300",
+  "phodu-club-web": "from-purple-500 via-fuchsia-500 to-violet-300",
   crackit: "from-orange-500 via-pink-500 to-yellow-300",
   "questions-db-pipeline": "from-emerald-500 via-lime-400 to-yellow-300",
 };

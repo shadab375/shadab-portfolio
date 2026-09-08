@@ -3,9 +3,9 @@
 const showcaseRows = [
   {
     label: "Primary Build",
-    title: "Phodu Club",
-    body: "Serverless learning platform serving 37k+ learners with tests, courses, daily practice, and DRM video.",
-    meta: "37,755+ learners · SST · AWS · Drizzle",
+    title: "Phodu Ecosystem",
+    body: "Three surfaces I ship: a serverless learning platform for 37k+ learners, the community site that feeds it, and BetterBooks, a used-textbook marketplace.",
+    meta: "3 surfaces · SST · AWS · Drizzle",
   },
   {
     label: "Growth Engine",

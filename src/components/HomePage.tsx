@@ -15,6 +15,30 @@ import { siteContent } from "@/data/siteContent";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const ecosystemSurfaces = [
+  {
+    uid: "phodu-club",
+    domain: "learn.phodu.club",
+    role: "Learning platform",
+    body: "Courses, paid and free tests, BITSAT Open, daily practice, DRM video, payments, and admin ops on serverless AWS.",
+    meta: "Next.js · SST · Drizzle",
+  },
+  {
+    uid: "phodu-club-web",
+    domain: "phodu.club",
+    role: "Community + acquisition",
+    body: "The public front door: prep guides, exam pages, free WhatsApp communities, and the funnel into the platform.",
+    meta: "WordPress · Cloudflare · SEO",
+  },
+  {
+    uid: "betterbooks",
+    domain: "betterbooks.in",
+    role: "Marketplace",
+    body: "Commission-free peer-to-peer resale of used prep books, with reviewed listings and a WhatsApp handoff.",
+    meta: "3,269 listings · ₹1.9L+ saved",
+  },
+] as const;
+
 export default function HomePage() {
   return (
     <>
@@ -127,12 +151,14 @@ function FeaturedPhodu() {
             Featured Production Work
           </p>
           <Heading as="h2" size="md" className="mt-4">
-            Phodu Club: serverless EdTech at real exam scale
+            The Phodu ecosystem: three surfaces, one funnel
           </Heading>
           <p className="mt-5 max-w-2xl text-xl font-semibold leading-9 text-slate-300">
             I own end-to-end delivery of the Phodu Club learning platform: Next.js,
             SST/IaC, Drizzle/Postgres, AWS infra, exam clients, daily practice,
-            protected video, and operator tooling for a live EdTech audience.
+            protected video, and operator tooling for a live EdTech audience. Around
+            it sit the community site that fills the funnel and BetterBooks, a
+            commission-free marketplace that recirculates the books.
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Button href="/project/phodu-club" label="Read case study" />
@@ -168,6 +194,34 @@ function FeaturedPhodu() {
               state, single-flight fetches, Cloudflare Turnstile, DRM playback,
               AI attempt analysis, and fine-tuned OpenAI English/LR practice.
             </p>
+          </div>
+        </div>
+
+        <div className="lg:col-span-2">
+          <p className="text-sm font-black uppercase tracking-[0.26em] text-yellow-300">
+            Surfaces I ship
+          </p>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {ecosystemSurfaces.map((surface) => (
+              <Link
+                key={surface.uid}
+                href={`/project/${surface.uid}`}
+                className="group rounded-3xl border border-slate-700 bg-slate-900/80 p-5 transition hover:border-yellow-300/50 hover:bg-slate-900"
+              >
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-slate-400">
+                  {surface.role}
+                </p>
+                <p className="mt-2 text-2xl font-black tracking-tight text-slate-100 transition group-hover:text-yellow-300">
+                  {surface.domain}
+                </p>
+                <p className="mt-3 text-base font-semibold leading-7 text-slate-300">
+                  {surface.body}
+                </p>
+                <p className="mt-4 text-sm font-bold uppercase tracking-[0.18em] text-slate-500">
+                  {surface.meta}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
